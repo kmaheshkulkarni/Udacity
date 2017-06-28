@@ -449,7 +449,7 @@ fermentation (convertion of sugars to alcohol) and this may be a good reason of
 alcohol reduction with the increase of SO2.
 
 ```{r Bivariate_Plots_Weak_5}
-p5 <- ggplot(data = wines, aes(x = alcohol, y = chlorides)) +
+ggplot(data = wines, aes(x = alcohol, y = chlorides)) +
   geom_jitter(alpha = 0.1) +
   ylim(0, 0.1) +
   geom_smooth(method = "lm", color = "blue")
@@ -513,7 +513,7 @@ p2 <- f_plot2(y = "total.sulfur.dioxide") + ylim(0, 300)
 grid.arrange(p1, p2, ncol = 2)
 ```
 
-Undrinkable wines distinguish with lowest free and total SO2. Probably these
+Undrinkable wines distinguish with the lowest free and total SO2. Probably these
 wines start to deteriorate, since the lack of SO2 favours unwanted microbial
 growth and oxidations.
 
@@ -878,15 +878,14 @@ data exploration. There was a clear bimodal distribution of residual sugar which
 indicates two types of wines, dry and off-dry. The quality ranged from 5 to 7
 for most of wines. There were strong correlations of density-sugars and
 density-alcohol, as it was expected, and an unusual positive relation of
-quality and alcohol. Several other relations were investigated with less
-importance.
+quality and alcohol. Several other relations were also investigated.
 
-Eventually, linear and decision tree methods were applied in order to build a
+Eventually, a linear and a decision tree method were applied in order to build a
 prediction model of the quality using all the variables of the data set. It was
-found once again that alcohol presents the higher influence in wine quality.
-Unfortunately, it was really difficult to find patterns between quality and
-variables, except for the alcohol-quality trend. Obviously, this data set is too
-small or there is a need for other more crucial variables to be investigated.
+found once again that alcohol presents the higher influence in wine quality, but
+the significance of the rest factors was not the desirable. Obviously, this
+data set is too small or there is a need for other more crucial variables to be
+investigated.
 
 It is really difficult to tightly define with only 12 physicochemical properties
 the complexity of a wine, which can come from different things such as:
