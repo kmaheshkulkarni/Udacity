@@ -12510,7 +12510,9 @@ Non POIs:  128
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Remove-outliers">Remove outliers<a class="anchor-link" href="#Remove-outliers">&#182;</a></h3><p>The higher salary of 'TOTAL', as well as 'THE TRAVEL AGENCY IN THE PARK', which was revealed from the previous exploration of the list of Enron Employees will be removed, since they don't belong to real persons. The graphical representation of bonus vs salary depicts some really high values but not unreasonable to pop them out.</p>
+<ul>
+<li>Let's find registries which have no non NAN values (recommended by the reviewer)</li>
+</ul>
 
 </div>
 </div>
@@ -12520,9 +12522,116 @@ Non POIs:  128
 <div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">employee</span><span class="p">,</span> <span class="n">nan_values</span> <span class="ow">in</span> <span class="n">enron_df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">nan_values</span> <span class="o">&gt;</span> <span class="mi">19</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">employee</span><span class="p">,</span> <span class="n">nan_values</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>LOCKHART EUGENE E 20
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>'LOCKHART EUGENE E' contains only NaN data and it should be removed.</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">enron_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;LOCKHART EUGENE E&#39;</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[8]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>salary                         NaN
+to_messages                    NaN
+deferral_payments              NaN
+total_payments                 NaN
+loan_advances                  NaN
+bonus                          NaN
+email_address                  NaN
+restricted_stock_deferred      NaN
+deferred_income                NaN
+total_stock_value              NaN
+expenses                       NaN
+from_poi_to_this_person        NaN
+exercised_stock_options        NaN
+from_messages                  NaN
+other                          NaN
+from_this_person_to_poi        NaN
+poi                          False
+long_term_incentive            NaN
+shared_receipt_with_poi        NaN
+restricted_stock               NaN
+director_fees                  NaN
+Name: LOCKHART EUGENE E, dtype: object</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Remove-outliers">Remove outliers<a class="anchor-link" href="#Remove-outliers">&#182;</a></h3><p>The higher salary of 'TOTAL', as well as 'THE TRAVEL AGENCY IN THE PARK', which was revealed from the previous exploration of the list of Enron Employees will be removed, since they don't belong to real persons. 'LOCKHART EUGENE E' will be also removed as it doesn't contain any data. The graphical representation of bonus vs salary depicts some really high values but not unreasonable to pop them out.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">pylab</span> inline
 
-<span class="n">enron_df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;TOTAL&#39;</span><span class="p">,</span> <span class="s1">&#39;THE TRAVEL AGENCY IN THE PARK&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">enron_df</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;TOTAL&#39;</span><span class="p">,</span> <span class="s1">&#39;THE TRAVEL AGENCY IN THE PARK&#39;</span><span class="p">,</span> <span class="s1">&#39;LOCKHART EUGENE E&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">enron_df</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;salary&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;bonus&#39;</span><span class="p">)</span>
 </pre></div>
 
@@ -12547,13 +12656,13 @@ Non POIs:  128
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[7]:</div>
+<div class="prompt output_prompt">Out[9]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x118e48550&gt;</pre>
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x11600f710&gt;</pre>
 </div>
 
 </div>
@@ -12781,12 +12890,13 @@ EJmZWa7+PxFTUaltAXxQAAAAAElFTkSuQmCC
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Task 2: Remove outliers</span>
 <span class="n">data_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;TOTAL&#39;</span><span class="p">)</span>
 <span class="n">data_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;THE TRAVEL AGENCY IN THE PARK&#39;</span><span class="p">)</span>
+<span class="n">data_dict</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;LOCKHART EUGENE E&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12799,7 +12909,7 @@ EJmZWa7+PxFTUaltAXxQAAAAAElFTkSuQmCC
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[8]:</div>
+<div class="prompt output_prompt">Out[10]:</div>
 
 
 
@@ -12817,14 +12927,14 @@ EJmZWa7+PxFTUaltAXxQAAAAAElFTkSuQmCC
  &#39;from_this_person_to_poi&#39;: &#39;NaN&#39;,
  &#39;loan_advances&#39;: &#39;NaN&#39;,
  &#39;long_term_incentive&#39;: &#39;NaN&#39;,
- &#39;other&#39;: 362096,
+ &#39;other&#39;: &#39;NaN&#39;,
  &#39;poi&#39;: False,
  &#39;restricted_stock&#39;: &#39;NaN&#39;,
  &#39;restricted_stock_deferred&#39;: &#39;NaN&#39;,
  &#39;salary&#39;: &#39;NaN&#39;,
  &#39;shared_receipt_with_poi&#39;: &#39;NaN&#39;,
  &#39;to_messages&#39;: &#39;NaN&#39;,
- &#39;total_payments&#39;: 362096,
+ &#39;total_payments&#39;: &#39;NaN&#39;,
  &#39;total_stock_value&#39;: &#39;NaN&#39;}</pre>
 </div>
 
@@ -12866,7 +12976,7 @@ EJmZWa7+PxFTUaltAXxQAAAAAElFTkSuQmCC
 <li>All the features have missing 'NaN' values except from 'poi' which is a boolean.</li>
 <li>Exploring the data, it was found two features, 'TOTAL' and 'THE TRAVEL AGENCY IN THE PARK', which are not persons and was removed.</li>
 <li>Some extreme values which belong to persons are not considered outliers and will help the algorithms to identify pois.</li>
-<li>The dataset will be susceptible to overfitting as it contains too many features and few data. In the following steps, we will try to apply various techniques to overcome this problem, such as:<ul>
+<li>The dataset is susceptible to overfitting since it contains too many features and few data. In the following steps, we will try to apply various techniques to overcome this problem, such as:<ul>
 <li>Feature removal</li>
 <li>Feature selection</li>
 <li>Cross-validation</li>
@@ -12885,7 +12995,7 @@ EJmZWa7+PxFTUaltAXxQAAAAAElFTkSuQmCC
 <h2 id="Section-2">Section 2<a class="anchor-link" href="#Section-2">&#182;</a></h2><ul>
 <li>What features did you end up using in your POI identifier, and what selection process did you use to pick them? Did you have to do any scaling? Why or why not? As part of the assignment, you should attempt to engineer your own feature that does not come ready-made in the dataset -- explain what feature you tried to make, and the rationale behind it. (You do not necessarily have to use it in the final analysis, only engineer and test it.) In your feature selection step, if you used an algorithm like a decision tree, please also give the feature importances of the features that you use, and if you used an automated feature selection function like SelectKBest, please report the feature scores and reasons for your choice of parameter values.  [relevant rubric items: “create new features”, “intelligently select features”, “properly scale features”]</li>
 </ul>
-<h3 id="Create-new-features">Create new features<a class="anchor-link" href="#Create-new-features">&#182;</a></h3><p>The number of sent/received emails to/from POIs is an interesting feature to be engineered and investigated. A better robust approach is actually the fraction of these emails to all emails than the absolute number of "poi emails":</p>
+<h3 id="Create-new-features">Create new features<a class="anchor-link" href="#Create-new-features">&#182;</a></h3><p>The number of sent/received emails to/from POIs is an interesting feature to be engineered and investigated. A more robust approach is probably the fraction of these emails to all emails than the absolute number of "poi emails". This ratio is the messages from/to POIs divided by to/from messages from the employee. In other words, this is a measure of frequency that an employee contacts with POIs. We expect a POI to send/receive emails with other POIs more frequently, hence the higher the ratio the more possible the person to be a POI.</p>
 <ol>
 <li>fraction_to_poi</li>
 <li>fraction_from_poi</li>
@@ -12896,7 +13006,7 @@ EJmZWa7+PxFTUaltAXxQAAAAAElFTkSuQmCC
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Task 3: Create new feature(s)</span>
@@ -12944,7 +13054,7 @@ EJmZWa7+PxFTUaltAXxQAAAAAElFTkSuQmCC
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Store to my_dataset for easy export below.</span>
@@ -12956,7 +13066,7 @@ EJmZWa7+PxFTUaltAXxQAAAAAElFTkSuQmCC
 
 <span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="k">import</span> <span class="n">SelectKBest</span>
 
-<span class="n">select</span> <span class="o">=</span> <span class="n">SelectKBest</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">select</span> <span class="o">=</span> <span class="n">SelectKBest</span><span class="p">()</span>
 <span class="n">select</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
 <span class="n">scores</span> <span class="o">=</span> <span class="n">select</span><span class="o">.</span><span class="n">scores_</span>
 <span class="c1"># Show the scores in a table</span>
@@ -13013,7 +13123,10 @@ restricted_stock_deferred 0.0654996529099
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The table above shows all the features with their respective scores. The engineered feature "fraction_to_poi" is one of the most important features taking the fifth place, behind the "exercised_stock_options", "total_stock_value", "bonus" and "salary".</p>
+<ul>
+<li>The table above shows all the features with their respective scores. The engineered feature "fraction_to_poi" is one of the most important features taking the fifth place, behind the "exercised_stock_options", "total_stock_value", "bonus" and "salary".</li>
+<li>SelectKBest process will be further examined by grid search in a pipeline. Instead of examining the features manually, a grid search of 'k' values in a pipeline will find the optimum 'k' values, which yield better algorithm performances. Numbers of 'k' ranged between 1 and 10, F1 and recall score were chosen as the evaluation metrics.</li>
+</ul>
 
 </div>
 </div>
@@ -13029,7 +13142,7 @@ restricted_stock_deferred 0.0654996529099
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="k">import</span> <span class="n">MinMaxScaler</span>
@@ -13060,8 +13173,8 @@ restricted_stock_deferred 0.0654996529099
 <li>It makes it trivial to move ordering of the pipeline pieces, or to swap pieces in and out.</li>
 <li>It allows you to do GridSearchCV on your workflow.</li>
 </ol>
-<h3 id="Tune-the-algorithms">Tune the algorithms<a class="anchor-link" href="#Tune-the-algorithms">&#182;</a></h3><p>Tuning an algorithm is a process in which we optimize the parameters that impact the model in order to enable the algorithm to perform with an improved performance. If we don't tune the algorithms well, performance will be poor with low accuracy, precision or reacall. To make it more concrete, for example in the KNN algorithm, we must specify the number of K's in our model (or centroids), that are used. To find the number which gives the best performance of KNN, we have to try several different values of K for a model.</p>
-<p>Trying lots of values for each of these free parameters is tedious, and there can sometimes be interactions between the choices we make in one step and the optimal value for a downstream step. Hopefully, there are two simple and easy tuning strategies, grid search and random search. Scikit-learn provides these two methods for algorithm parameter tuning. GridSearchCV allows us to construct a grid of all the combinations of parameters passing one classifier to pipeline each time, tries each combination, and then reports back the best combination. So, instead of trying numerous values for each tuning parameter, GridSearchCV will apply all the combinations of parameters - not just vary them independently - avoiding local optima.</p>
+<h3 id="Tune-the-algorithms">Tune the algorithms<a class="anchor-link" href="#Tune-the-algorithms">&#182;</a></h3><p>Tuning an algorithm is a process in which we optimize the parameters that impact the model in order to enable the algorithm to perform with an improved performance. If we don't tune the algorithms well, performance will be poor with low accuracy, precision or recall. Most of the machine learning algorithms contain a set of parameters (hyperparameters) which should be set up adequately to perform the best. While all of the algorithms attempt to set reasonable default hyperparameters for us, they can often fail to provide optimal results for many real world datasets in practice. To find an optimized combination of hyperparameters, a metric is chosen to measure the algorithm's performance on an independent data set and hyperparameters that maximize this measure are adopted. To make it more concrete through an example, the SVC classifier have several tunable hyperparameters (C, gamma, kernel, etc.) that can greatly affect the model fit. Their values can range greatly. For example C and gamma can be a float, while kernel can take ‘linear’, ‘poly’, ‘rbf’, or ‘sigmoid’ type. Our job is to specify the best combination of C, gamma values and kernel type, that produces optimal performances.</p>
+<p>Tuning the models is a tedious, time-consuming process and there can sometimes be interactions between the choices we make in one step and the optimal value for a downstream step. Hopefully, there are two simple and easy tuning strategies, grid search and random search. Scikit-learn provides these two methods for algorithm parameter tuning. GridSearchCV allows us to construct a grid of all the combinations of parameters passing one classifier to pipeline each time, tries each combination, and then reports back the best combination. So, instead of trying numerous values for each tuning parameter, GridSearchCV will apply all the combinations of parameters - not just vary them independently - avoiding local optima.</p>
 <p>To summarize, the power of GridSearchCV is that it multiplies out all the combinations of parameters and tries each one, making a k-fold cross-validated model for each combination. Then, we can ask for predictions and parameters from our GridSearchCV object and it will automatically return to us the best set of predictions, as well as the best parameters.</p>
 <p>The following algoriths were studied:</p>
 <ul>
@@ -13075,13 +13188,13 @@ restricted_stock_deferred 0.0654996529099
 <h3 id="Validate-analysis">Validate analysis<a class="anchor-link" href="#Validate-analysis">&#182;</a></h3><p>The process of measuring the effectiveness of an algorithm for every possible input or how well it is fit and it generalizes to new data is called validation. A common mistake is to train and test the algorithm on the same data, which results to over-fitting, i.e. algorithm performs great on the training dataset, but it suffers on new data. To overcome this, data are separated into training and testing tests. In our analysis two validation steps applied through pipeline:</p>
 <ol>
 <li>Data was separated into 70% training and 30% testing sets.</li>
-<li>Because of the small size of the Enron dataset, stratified shuffle split method was used, which returns multiple stratified randomized splits enhancing cross validation performance. The same strategy is used in tester.py with 1000 folds, while 10 iterations were used for the initial algorithms exploration.</li>
+<li>Because of the small size of the Enron dataset, stratified shuffle split method was used, which returns multiple stratified randomized splits, thus enhancing cross validation performance. A common problem with small datasets or with datasets that may have a class which dominates the others (in our study case, 88% of the data belongs to non POIs class) is the imbalance in the data. For example, when we split this dataset to 70% of training data, the training set may contain only one class of response variable, i.e. the non POIs (the majority class). To address this problem, stratified shuffle split divides randomly the data into multiple trials. For the investigation of the algorithms, 10 trials were created with 30% test set size. The same split ratio is used in tester.py but with 1000 folds.</li>
 </ol>
-<h3 id="Evaluate-the-algorithms">Evaluate the algorithms<a class="anchor-link" href="#Evaluate-the-algorithms">&#182;</a></h3><p>The fraction of correct predictions, i.e. accuracy is typically not enough information to evaluate a model. Although it is a starting point, it can lead to invalid decisions. Models with high accuracy can have terrible precision or recall scores. For this reason the evaluation metrics that were assessed are:</p>
+<h3 id="Evaluate-the-algorithms">Evaluate the algorithms<a class="anchor-link" href="#Evaluate-the-algorithms">&#182;</a></h3><p>Accuracy, i.e. the fraction of correct predictions is typically not enough information to evaluate a model. Although it is a starting point, it can lead to invalid decisions. Models with high accuracy may have inadequate precision or recall scores. For this reason the evaluation metrics that were assessed are:</p>
 <ol>
-<li>Precision, the ratio tp / (tp + fp) where tp is the number of true positives and fp the number of false positives. The precision is intuitively the ability of the classifier not to label as positive a sample that is negative. The best value is 1 and the worst value is 0.</li>
-<li>Recall, the ratio tp / (tp + fn) where tp is the number of true positives and fn the number of false negatives. The recall is intuitively the ability of the classifier to find all the positive samples. The best value is 1 and the worst value is 0.</li>
-<li>F1 score,  a weighted average of the precision and recall, where an F1 score reaches its best value at 1 and worst score at 0. The relative contribution of precision and recall to the F1 score are equal. The formula for the F1 score is: F1 = 2 <em> (precision </em> recall) / (precision + recall). Models were evaluated based on this metric.</li>
+<li>Precision, the ratio tp / (tp + fp) where tp is the number of true positives and fp the number of false positives. The precision is intuitively the ability of the classifier not to label as positive a sample that is negative. The best value is 1 and the worst value is 0. In our study case, precision is when the algorithm guesses that somebody is a POI and actually measures how certain we are that this person really is a POI. For example, a precision of 0.3 means that if the model predicts 100 POIs, the 30 persons are POIs and the rest 70 are non POIs.</li>
+<li>Recall, the ratio tp / (tp + fn) where tp is the number of true positives and fn the number of false negatives. The recall is intuitively the ability of the classifier to find all the positive samples. The best value is 1 and the worst value is 0. In context to the project, recall shows how well our identifier can pick the POIs. For example, a low recall score of 0.2 indicates that our identifier finds only 20% of all the real POIs in the prediction. The rest 80% of real POIs will not be investigated by the authorities if they trust our model, something that we don't want to happen.</li>
+<li>F1 score,  a weighted average of the precision and recall, where an F1 score reaches its best value at 1 and worst score at 0. The relative contribution of precision and recall to the F1 score are equal. The formula for the F1 score is: F1 = 2 x (precision x recall) / (precision + recall).</li>
 </ol>
 
 </div>
@@ -13089,7 +13202,7 @@ restricted_stock_deferred 0.0654996529099
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">warnings</span><span class="p">;</span> <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
@@ -13105,12 +13218,15 @@ restricted_stock_deferred 0.0654996529099
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">classification_report</span>
 <span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">time</span>
 
-<span class="n">features_train</span><span class="p">,</span> <span class="n">features_test</span><span class="p">,</span> <span class="n">labels_train</span><span class="p">,</span> <span class="n">labels_test</span> <span class="o">=</span> \
-    <span class="n">train_test_split</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="c1"># Store to my_dataset for easy export below.</span>
+<span class="n">my_dataset</span> <span class="o">=</span> <span class="n">data_dict</span>
+
+<span class="c1"># Extract features and labels from dataset for local testing</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">featureFormat</span><span class="p">(</span><span class="n">my_dataset</span><span class="p">,</span> <span class="n">features_list</span><span class="p">,</span> <span class="n">sort_keys</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">labels</span><span class="p">,</span> <span class="n">features</span> <span class="o">=</span> <span class="n">targetFeatureSplit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
 <span class="c1"># Instantiate the pipeline steps</span>
 <span class="n">select</span> <span class="o">=</span> <span class="n">SelectKBest</span><span class="p">()</span>
-<span class="n">scaler</span> <span class="o">=</span> <span class="n">MinMaxScaler</span><span class="p">()</span>
 <span class="n">nb</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
 <span class="n">svc</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">()</span>
 <span class="n">dtc</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">()</span>
@@ -13127,28 +13243,32 @@ restricted_stock_deferred 0.0654996529099
     <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
     <span class="c1"># Add pipeline steps into a list</span>
     <span class="n">steps</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;feature_selection&#39;</span><span class="p">,</span> <span class="n">select</span><span class="p">),</span>
-             <span class="p">(</span><span class="s1">&#39;feature_scaling&#39;</span><span class="p">,</span> <span class="n">scaler</span><span class="p">),</span>
              <span class="p">(</span><span class="s1">&#39;clf&#39;</span><span class="p">,</span> <span class="n">clf</span><span class="p">)]</span>
     
     <span class="c1"># Create the pipeline</span>
     <span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span><span class="n">steps</span><span class="p">)</span>
+    
+    <span class="c1"># Split data to train/test sets.</span>
+    <span class="n">features_train</span><span class="p">,</span> <span class="n">features_test</span><span class="p">,</span> <span class="n">labels_train</span><span class="p">,</span> <span class="n">labels_test</span> <span class="o">=</span> \
+    <span class="n">train_test_split</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
     
     <span class="c1"># Create Stratified ShuffleSplit cross-validator.</span>
     <span class="c1"># Provides train/test indices to split data in train/test sets.</span>
     <span class="n">sss</span> <span class="o">=</span> <span class="n">StratifiedShuffleSplit</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="n">n_splits</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
     
     <span class="c1"># Create grid search</span>
-    <span class="n">cv</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">param_grid</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;f1&#39;</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">sss</span><span class="p">)</span>
+    <span class="n">gs</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">param_grid</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;f1&#39;</span><span class="p">,</span> <span class="s1">&#39;recall&#39;</span><span class="p">),</span>
+                      <span class="n">cv</span><span class="o">=</span><span class="n">sss</span><span class="p">,</span> <span class="n">refit</span><span class="o">=</span><span class="s1">&#39;f1&#39;</span><span class="p">)</span>
                 
     <span class="c1"># Fit pipeline on features_train and labels_train</span>
-    <span class="n">cv</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">features_train</span><span class="p">,</span> <span class="n">labels_train</span><span class="p">)</span>
+    <span class="n">gs</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">features_train</span><span class="p">,</span> <span class="n">labels_train</span><span class="p">)</span>
     <span class="c1"># Call pipeline.predict() on features_test data to make a set of test predictions</span>
-    <span class="n">labels_pred</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">features_test</span><span class="p">)</span>
+    <span class="n">labels_pred</span> <span class="o">=</span> <span class="n">gs</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">features_test</span><span class="p">)</span>
     <span class="c1"># Test predictions using sklearn.classification_report()</span>
     <span class="n">report</span> <span class="o">=</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">labels_test</span><span class="p">,</span> <span class="n">labels_pred</span><span class="p">)</span>
     <span class="c1"># Find the best parameters and scores</span>
-    <span class="n">best_params</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">best_params_</span>
-    <span class="n">best_score</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">best_score_</span>
+    <span class="n">best_params</span> <span class="o">=</span> <span class="n">gs</span><span class="o">.</span><span class="n">best_params_</span>
+    <span class="n">best_score</span> <span class="o">=</span> <span class="n">gs</span><span class="o">.</span><span class="n">best_score_</span>
     <span class="c1"># Print the reports</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Report:&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">report</span><span class="p">)</span>
@@ -13158,30 +13278,27 @@ restricted_stock_deferred 0.0654996529099
     <span class="nb">print</span><span class="p">(</span><span class="n">best_params</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Time passed: &quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="s2">&quot;s&quot;</span><span class="p">)</span>
     <span class="c1"># Return the best estimator</span>
-    <span class="k">return</span> <span class="n">cv</span><span class="o">.</span><span class="n">best_estimator_</span>
+    <span class="k">return</span> <span class="n">gs</span><span class="o">.</span><span class="n">best_estimator_</span>
 
 <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">clf</span> <span class="ow">in</span> <span class="n">classifiers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;##########################################################################################################&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">clf</span> <span class="o">==</span> <span class="n">nb</span><span class="p">:</span>
-        <span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;feature_selection__k&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">]}</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;feature_selection__k&#39;</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">))}</span>
     <span class="k">elif</span> <span class="n">clf</span> <span class="o">==</span> <span class="n">svc</span><span class="p">:</span>
-        <span class="n">parameters</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;feature_selection__k&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
-                      <span class="s1">&#39;clf__C&#39;</span><span class="p">:[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span>
-                      <span class="s1">&#39;clf__gamma&#39;</span><span class="p">:[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]}]</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;feature_selection__k&#39;</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)),</span>
+                      <span class="s1">&#39;clf__C&#39;</span><span class="p">:[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">]}]</span>
     <span class="k">elif</span> <span class="n">clf</span> <span class="o">==</span> <span class="n">dtc</span><span class="p">:</span>
-        <span class="n">parameters</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;feature_selection__k&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;feature_selection__k&#39;</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)),</span>
                       <span class="s1">&#39;clf__criterion&#39;</span><span class="p">:[</span><span class="s1">&#39;gini&#39;</span><span class="p">,</span> <span class="s1">&#39;entropy&#39;</span><span class="p">]}]</span>
     <span class="k">elif</span> <span class="n">clf</span> <span class="o">==</span> <span class="n">knc</span><span class="p">:</span>
-        <span class="n">parameters</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;feature_selection__k&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
-                      <span class="s1">&#39;clf__n_neighbors&#39;</span><span class="p">:[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span>
-                      <span class="s1">&#39;clf__algorithm&#39;</span><span class="p">:[</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="s1">&#39;ball_tree&#39;</span><span class="p">,</span> <span class="s1">&#39;kd_tree&#39;</span><span class="p">,</span> <span class="s1">&#39;brute&#39;</span><span class="p">]}]</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;feature_selection__k&#39;</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)),</span>
+                      <span class="s1">&#39;clf__n_neighbors&#39;</span><span class="p">:[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">]}]</span>
     <span class="k">elif</span> <span class="n">clf</span> <span class="o">==</span> <span class="n">rfc</span><span class="p">:</span>
-        <span class="n">parameters</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;feature_selection__k&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
-                      <span class="s1">&#39;clf__n_estimators&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
-                      <span class="s1">&#39;clf__criterion&#39;</span><span class="p">:[</span><span class="s1">&#39;gini&#39;</span><span class="p">,</span> <span class="s1">&#39;entropy&#39;</span><span class="p">]}]</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;feature_selection__k&#39;</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)),</span>
+                      <span class="s1">&#39;clf__n_estimators&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">]}]</span>
     <span class="k">elif</span> <span class="n">clf</span> <span class="o">==</span> <span class="n">abc</span><span class="p">:</span>
-        <span class="n">parameters</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;feature_selection__k&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;feature_selection__k&#39;</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)),</span>
                       <span class="s1">&#39;clf__n_estimators&#39;</span><span class="p">:[</span><span class="mi">45</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">55</span><span class="p">]}]</span>
     <span class="n">optimize_clf</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">n_splits</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
@@ -13205,31 +13322,31 @@ GaussianNB
 Report:
              precision    recall  f1-score   support
 
-        0.0       0.89      0.89      0.89        38
-        1.0       0.20      0.20      0.20         5
+        0.0       0.90      0.92      0.91        38
+        1.0       0.25      0.20      0.22         5
 
-avg / total       0.81      0.81      0.81        43
+avg / total       0.82      0.84      0.83        43
 
 Best f1-score:
-0.466370851371
+0.353015873016
 Best parameters:
-{&#39;feature_selection__k&#39;: 3}
-Time passed:  0.124 s
+{&#39;feature_selection__k&#39;: 2}
+Time passed:  0.478 s
 ##########################################################################################################
 SVM
 Report:
              precision    recall  f1-score   support
 
-        0.0       0.88      0.97      0.93        38
+        0.0       0.88      1.00      0.94        38
         1.0       0.00      0.00      0.00         5
 
-avg / total       0.78      0.86      0.82        43
+avg / total       0.78      0.88      0.83        43
 
 Best f1-score:
-0.361904761905
+0.0666666666667
 Best parameters:
-{&#39;clf__C&#39;: 100, &#39;clf__gamma&#39;: 1, &#39;feature_selection__k&#39;: 1}
-Time passed:  0.594 s
+{&#39;clf__C&#39;: 100, &#39;feature_selection__k&#39;: 2}
+Time passed:  1.31 s
 ##########################################################################################################
 Decision Trees
 Report:
@@ -13244,37 +13361,37 @@ Best f1-score:
 0.536688311688
 Best parameters:
 {&#39;clf__criterion&#39;: &#39;gini&#39;, &#39;feature_selection__k&#39;: 1}
-Time passed:  0.264 s
+Time passed:  1.126 s
 ##########################################################################################################
 KNN
 Report:
              precision    recall  f1-score   support
 
-        0.0       0.88      0.95      0.91        38
+        0.0       0.88      0.97      0.93        38
         1.0       0.00      0.00      0.00         5
 
-avg / total       0.78      0.84      0.81        43
+avg / total       0.78      0.86      0.82        43
 
 Best f1-score:
 0.435555555556
 Best parameters:
-{&#39;clf__algorithm&#39;: &#39;auto&#39;, &#39;clf__n_neighbors&#39;: 3, &#39;feature_selection__k&#39;: 1}
-Time passed:  1.789 s
+{&#39;clf__n_neighbors&#39;: 3, &#39;feature_selection__k&#39;: 2}
+Time passed:  2.204 s
 ##########################################################################################################
 Random Forest
 Report:
              precision    recall  f1-score   support
 
-        0.0       0.88      0.95      0.91        38
-        1.0       0.00      0.00      0.00         5
+        0.0       0.90      0.92      0.91        38
+        1.0       0.25      0.20      0.22         5
 
-avg / total       0.78      0.84      0.81        43
+avg / total       0.82      0.84      0.83        43
 
 Best f1-score:
-0.537619047619
+0.519963369963
 Best parameters:
-{&#39;clf__criterion&#39;: &#39;gini&#39;, &#39;clf__n_estimators&#39;: 10, &#39;feature_selection__k&#39;: 1}
-Time passed:  2.763 s
+{&#39;clf__n_estimators&#39;: 10, &#39;feature_selection__k&#39;: 1}
+Time passed:  4.296 s
 ##########################################################################################################
 AdaBoost
 Report:
@@ -13289,7 +13406,7 @@ Best f1-score:
 0.536688311688
 Best parameters:
 {&#39;clf__n_estimators&#39;: 45, &#39;feature_selection__k&#39;: 1}
-Time passed:  8.651 s
+Time passed:  30.163 s
 </pre>
 </div>
 </div>
@@ -13302,65 +13419,94 @@ Time passed:  8.651 s
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Fine-tuning">Fine tuning<a class="anchor-link" href="#Fine-tuning">&#182;</a></h3><p>After testing and tuning the algorithms, most of them perfoms quite well. The best algorithm in terms of acceptable f1 score and reasonable time cost was found to be the decision trees. AdaBoost and Random Forest perfomed equally or better than Decision Trees, but the required processing time is considerably greater. This is an important factor to consider when we want to run multiple times our algorithms. For this reason, decision trees will be further tuned.</p>
+<h3 id="Fine-tuning">Fine tuning<a class="anchor-link" href="#Fine-tuning">&#182;</a></h3><ul>
+<li>After testing and tuning the algorithms, most of them perfoms quite well. The best algorithm in terms of acceptable f1 score and reasonable time cost was found to be the decision trees. AdaBoost and Random Forest perfomed equally or better than Decision Trees, but the required processing time is considerably greater. This is an important factor to consider when we want to run multiple times our algorithms. For this reason, decision trees will be further tuned.</li>
+<li>In most cases, 'k = 1' gives the best scores. Probably, that shows our algorithm is trained better with fewer features in such a small dataset. To improve algorithm learning ability, most of the features was finally removed and only the best 5 were examined.</li>
+</ul>
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">parameters</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;feature_selection__k&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
-               <span class="s1">&#39;clf__criterion&#39;</span><span class="p">:[</span><span class="s1">&#39;gini&#39;</span><span class="p">,</span> <span class="s1">&#39;entropy&#39;</span><span class="p">],</span>
-               <span class="s1">&#39;clf__max_depth&#39;</span><span class="p">:[</span><span class="kc">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
-               <span class="s1">&#39;clf__max_features&#39;</span><span class="p">:[</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="s1">&#39;sqrt&#39;</span><span class="p">,</span> <span class="s1">&#39;log2&#39;</span><span class="p">],</span>
-               <span class="s1">&#39;clf__class_weight&#39;</span><span class="p">:[</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;balanced&#39;</span><span class="p">]}]</span>
-
-<span class="n">clf</span> <span class="o">=</span> <span class="n">optimize_clf</span><span class="p">(</span><span class="n">dtc</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">n_splits</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Report:
-             precision    recall  f1-score   support
-
-        0.0       0.88      0.95      0.91        38
-        1.0       0.00      0.00      0.00         5
-
-avg / total       0.78      0.84      0.81        43
-
-Best f1-score:
-0.536688311688
-Best parameters:
-{&#39;clf__class_weight&#39;: None, &#39;clf__criterion&#39;: &#39;gini&#39;, &#39;clf__max_depth&#39;: None, &#39;clf__max_features&#39;: None, &#39;feature_selection__k&#39;: 1}
-Time passed:  23.877 s
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Results">Results<a class="anchor-link" href="#Results">&#182;</a></h2><p>Keeping only the 5 features with higher importances to prevent from overfitting and using the desicion trees as the algorithm model, it was achieved the desirable scoring for both precision and recall. Run poi_id.py and tester.py to generate the results.</p>
+<h2 id="Results-and-Discussion">Results and Discussion<a class="anchor-link" href="#Results-and-Discussion">&#182;</a></h2><p>The table below shows the results after training and testing the decision tree algorithm without (first number) and with (second number) the created feature. In most of the cases, it seems that the new engineered feature have a positive impact on the performance. Definitely, they don't affect the performance negatively. Therefore, the algorithm will be further tested with the created features in the list.</p>
+<table>
+<thead><tr>
+<th>k</th>
+<th>Accuracy</th>
+<th>Precision</th>
+<th>Recall</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>0.80013 / 0.81160</td>
+<td>0.24696 / 0.28907</td>
+<td>0.24350 / 0.28300</td>
+</tr>
+<tr>
+<td>7</td>
+<td>0.80380 / 0.81153</td>
+<td>0.25658 / 0.28133</td>
+<td>0.24850 / 0.26600</td>
+</tr>
+<tr>
+<td>5</td>
+<td>0.80660 / 0.80947</td>
+<td>0.27687 / 0.27749</td>
+<td>0.27950 / 0.26750</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0.81327 / 0.81393</td>
+<td>0.29130 / 0.30333</td>
+<td>0.27950 / 0.30500</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.81973 / 0.81813</td>
+<td>0.22713 / 0.22000</td>
+<td>0.14650 / 0.14300</td>
+</tr>
+</tbody>
+</table>
+<p>Finally, after several tests, a smaller list with five features worked better than the whole list of features. As it was mentioned previously, algorithms trained on small datasets with many features tend to overfit during training. Thus, they cannot generalise in new data and their performance is poor. The features included in the list were selected by their scores from the SelectKBest method.</p>
+<p>Eventually, the model with the optimal set of features and parameters is:</p>
+<h3 id="Decision-Trees-Classifier:">Decision Trees Classifier:<a class="anchor-link" href="#Decision-Trees-Classifier:">&#182;</a></h3><ul>
+<li>Best parameters:<ul>
+<li>'class_weight': None</li>
+<li>'criterion': 'gini'</li>
+<li>'max_features': 'auto'</li>
+<li>'splitter': 'best'</li>
+<li>'feature_selection_k': 5</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Feature Ranking:<ol>
+<li>feature no. 1: total_stock_value (0.4318449749484233)</li>
+<li>feature no. 2: salary (0.19978632478632477)</li>
+<li>feature no. 3: fraction_to_poi (0.16519918459573657)</li>
+<li>feature no. 4: bonus (0.12090455840455819)</li>
+<li>feature no. 5: exercised_stock_options (0.08226495726495725)</li>
+</ol>
+</li>
+</ul>
+<p>The engineered features 'fraction_to_poi' was selected by SelectKBest method and the optimal 'k' value was found to be 5.</p>
+<ul>
+<li>Report generated by tester.py':</li>
+</ul>
+<p>Pipeline(memory=None, steps=[('feature_selection', SelectKBest(k=5, score_func=&lt;function f_classif at 0x111207e18&gt;)), ('clf', DecisionTreeClassifier(class_weight=None, criterion='gini', max_depth=None,
+            max_features='auto', max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, presort=False, random_state=None,
+            splitter='best'))])</p>
+<p>Accuracy: 0.80571   Precision: 0.33349  Recall: 0.36050 F1: 0.34647 F2: 0.35475</p>
+<p>Total predictions: 14000    True positives:  721    False positives: 1441   False negatives: 1279   True negatives: 10559</p>
 
 </div>
 </div>
