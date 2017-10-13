@@ -34,4 +34,4 @@
 
 - For this project, you will create a data visualization using Tableau that tells a story or highlights trends or patterns in a data set. Your work should be a reflection of the theory and practice of data visualization, such as visual encodings, design principles, and effective communication.
 
-![alt text](https://github.com/georgiost77/Udacity/blob/master/nd002.png "Udacity Certificate")
+![alt text](https://github.com/gtraskas/Udacity/blob/master/nd002.png "Udacity Certificate")
