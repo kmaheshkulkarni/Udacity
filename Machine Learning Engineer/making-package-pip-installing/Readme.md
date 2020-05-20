@@ -32,6 +32,13 @@ etcetera... In other words, you can import and use the Gaussian class because th
 
 Note that if you change the code in the distributions folder after pip installing the package, Python will not know about the changes. You'll need to run `pip install --upgrade .` when you make changes to the package files.
 
+## Unit Tests
+
+When you're ready to test out the code, you want to pip install the distributions package and then run the unit tests. In the terminal:
+
+* type `pip install .` into the command line.
+* Then run the unit tests by typing `python3 -m unittest test`.
+
 ## Upload to PyPi
 
 The Python package is located in the folder python_package
@@ -41,15 +48,15 @@ You need to create a `setup.cfg` file, `README.md` file, and `license.txt` file.
 Once you have all the files set up correctly, you can use the following commands on the command line (note that you need to make the name of the package unique, so change the name of the package from distributions to something else. That means changing the information in `setup.py` and the folder name:
 
 * `cd python_package`
-* `python setup.py sdist`
+* `python3 setup.py sdist`
 * `pip install twine`
 
-### Commands to upload to the pypi test repository
+### Commands to upload to the PyPi test repository
 
 * `twine upload --repository-url https://test.pypi.org/legacy/ dist/*`
 * `pip install --index-url https://test.pypi.org/simple/ distributions`
 
-### Command to upload to the pypi repository
+### Command to upload to the PyPi repository
 
 * `twine upload dist/*`
 * `pip install distributions`
