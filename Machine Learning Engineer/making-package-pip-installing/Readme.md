@@ -27,3 +27,29 @@ Then within the Python interpreter, you can use the distributions package:
 * `gaussian_one + gaussian_one`
 
 etcetera... In other words, you can import and use the Gaussian class because the distributions package is now officially installed as part of your Python installation.
+
+## Upgrade
+
+Note that if you change the code in the distributions folder after pip installing the package, Python will not know about the changes. You'll need to run `pip install --upgrade .` when you make changes to the package files.
+
+## Upload to PyPi
+
+The Python package is located in the folder python_package
+
+You need to create a `setup.cfg` file, `README.md` file, and `license.txt` file. You also need to create accounts for the pypi test repository and pypi repository.
+
+Once you have all the files set up correctly, you can use the following commands on the command line (note that you need to make the name of the package unique, so change the name of the package from distributions to something else. That means changing the information in `setup.py` and the folder name:
+
+* `cd python_package`
+* `python setup.py sdist`
+* `pip install twine`
+
+### Commands to upload to the pypi test repository
+
+* `twine upload --repository-url https://test.pypi.org/legacy/ dist/*`
+* `pip install --index-url https://test.pypi.org/simple/ distributions`
+
+### Command to upload to the pypi repository
+
+* `twine upload dist/*`
+* `pip install distributions`
