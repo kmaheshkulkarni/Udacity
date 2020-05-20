@@ -4,7 +4,11 @@ Put code into a folder, e.g. "python_package" in the workspace. Inside the folde
 
 * a `setup.py` file, which is required in order to use pip install
 * a folder called 'distributions', which is the name of the Python package
-* inside the 'distributions' folder, you need the `Gaussiandistribution.py` file, `Generaldistribution.py` and an `__init__.py` file.
+    * inside the 'distributions' folder, you need the `Gaussiandistribution.py` file, `Generaldistribution.py`
+    * an `__init__.py` file
+    * `license.txt`
+    * `setup.cfg`
+    * a `README.md` file
 
 Set up a virtual environment first. A virtual environment is a siloed Python installation apart from your main Python installation. That way you can easily delete the virtual environment without affecting your Python installation.
 
