@@ -42,12 +42,12 @@ When you're ready to test out the code, in the terminal:
 
 The Python package is located in the folder python_package
 
-You need to create a `setup.cfg` file, `README.md` file, and `license.txt` file. You also need to create accounts for the pypi test repository and pypi repository.
+You need to create a `setup.cfg` file, `README.md` file, and `license.txt` file (e.g. MIT licence). You also need to create accounts for the pypi test repository and pypi repository.
 
 Once you have all the files set up correctly, you can use the following commands on the command line (note that you need to make the name of the package unique, so change the name of the package from distributions to something else. That means changing the information in `setup.py` and the folder name:
 
 * `cd python_package`
-* `python3 setup.py sdist`
+* `python3 setup.py sdist bdist_wheel`
 * `pip install twine`
 
 ### Commands to upload to the PyPi test repository
