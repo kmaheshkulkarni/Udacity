@@ -1,10 +1,10 @@
 # Convert modularized code into a Python package
 
-Put code into a folder, e.g. "python_package" in the workspace. Inside the folder, you'll need to create a few folders and files:
+Put code into a folder, e.g. "python_package" in the workspace. Inside the folder, you need to create a few folders and files:
 
 * a `setup.py` file, which is required in order to use pip install
 * a folder called 'distributions', which is the name of the Python package
-* inside the 'distributions' folder, you'll need the `Gaussiandistribution.py` file, `Generaldistribution.py` and an `__init__.py` file.
+* inside the 'distributions' folder, you need the `Gaussiandistribution.py` file, `Generaldistribution.py` and an `__init__.py` file.
 
 Set up a virtual environment first. A virtual environment is a siloed Python installation apart from your main Python installation. That way you can easily delete the virtual environment without affecting your Python installation.
 
@@ -30,14 +30,13 @@ etcetera... In other words, you can import and use the Gaussian class because th
 
 ## Upgrade
 
-Note that if you change the code in the distributions folder after pip installing the package, Python will not know about the changes. You'll need to run `pip install --upgrade .` when you make changes to the package files.
+Note that if you change the code in the distributions folder after pip installing the package, Python will not know about the changes. You'll need to run `pip install [package_name] --upgrade` when you make changes to the package files.
 
 ## Unit Tests
 
-When you're ready to test out the code, you want to pip install the distributions package and then run the unit tests. In the terminal:
+When you're ready to test out the code, in the terminal:
 
-* type `pip install .` into the command line.
-* Then run the unit tests by typing `python3 -m unittest test`.
+* Run the unit tests by typing `python3 -m unittest test`.
 
 ## Upload to PyPi
 
